@@ -9,6 +9,16 @@ and requires no paid plan.
 
 ---
 
+## What it does
+
+- **Browse 105 events across 30 towns** in Vermont and New Hampshire, grouped
+  into Today / Tomorrow / This Week / Later
+- **Filter** by eight categories or free-only, and search names, venues, and towns
+- **Pick a state, then a town** — each with a photo, Wikipedia summary, and link
+- **See everything on a map**, pins tinted by category
+- **Check the forecast** for the event's date at the venue's coordinates
+- **Save events** and **add them to your calendar**
+
 ## Screens
 
 | Discover | Browse | Map | Saved |
@@ -64,10 +74,12 @@ Pick any simulator and run. No configuration needed.
 
 ## Architecture
 
+Full write-up with diagrams: **[ARCHITECTURE.md](ARCHITECTURE.md)**
+
 ```
 Models/     Event, EventCategory, Venue, AppLocation, SavedEvent (@Model)
 Data/       EventProviding protocol + two implementations, EventStore (@Observable),
-            WeatherService, WikipediaService, LocationProvider, Secrets
+            WeatherService, WikipediaService, LocationProvider, VenueImagery, Secrets
 Views/      Discover, Towns (state chooser), StateTowns, TownDetail, Map,
             Saved, EventDetail + components
 Theme/      Color and surface decisions in one place
@@ -127,6 +139,21 @@ Core Data and `ObservableObject` to SwiftData and `@Observable`.
 > commit in history, so it no longer appears anywhere in this repository. The
 > token was publicly readable before that cleanup, so it should still be treated
 > as compromised and revoked at the provider.
+
+---
+
+## Not done yet
+
+Tracked honestly rather than omitted:
+
+- **No test target.** The pure logic is the place to start — date bucketing,
+  dedupe, town matching, and the feed's offset resolution are all testable
+  without a simulator.
+- **No privacy manifest.** `PrivacyInfo.xcprivacy` is required for App Store
+  submission.
+- **App icon** is the original capstone artwork.
+- **iPad and accessibility** have not had a dedicated pass. Dynamic Type is
+  respected via semantic fonts but has not been audited at the largest sizes.
 
 ---
 
