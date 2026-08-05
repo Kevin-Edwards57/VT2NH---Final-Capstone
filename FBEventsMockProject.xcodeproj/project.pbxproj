@@ -255,6 +255,9 @@
 				DEVELOPMENT_TEAM = W2B27X8566;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VT2NH;
+				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "VT2NH adds events you choose to your calendar.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "VT2NH uses your location once to show which town is closest to you.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +287,9 @@
 				DEVELOPMENT_TEAM = W2B27X8566;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VT2NH;
+				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "VT2NH adds events you choose to your calendar.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "VT2NH uses your location once to show which town is closest to you.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -1,20 +1,19 @@
 //
 //  FBEventsMockProjectApp.swift
-//  FBEventsMockProject
+//  VT2NH
 //
-//  Created by Kevin Edwards on 4/11/25.
+//  Entry point. Installs the SwiftData container and hands off to RootView.
 //
 
 import SwiftUI
+import SwiftData
 
 @main
-struct FBEventsMockProjectApp: App {
-    let persistenceController = PersistenceController.shared
-
+struct VT2NHApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            RootView()
         }
+        .modelContainer(for: SavedEvent.self)
     }
 }

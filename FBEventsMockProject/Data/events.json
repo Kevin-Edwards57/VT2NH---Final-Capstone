@@ -1,0 +1,225 @@
+{
+  "version": 2,
+  "note": "Sample feed. Dates are stored as offsets from launch day so the calendar is never stale. Venue coordinates are approximate.",
+  "events": [
+    {
+      "id": "btv-001", "name": "Green Mountain Soul Revue", "summary": "Six-piece Burlington soul outfit running through Stax and Motown deep cuts, with a horn section that does not quit.",
+      "category": "music", "town": "Burlington", "state": "Vermont",
+      "venue": { "name": "Higher Ground Ballroom", "address": "1214 Williston Rd, South Burlington, VT", "latitude": 44.4443, "longitude": -73.1852 },
+      "dayOffset": 0, "startHour": 20, "startMinute": 0, "durationMinutes": 180, "priceLabel": "$25", "url": "https://highergroundmusic.com"
+    },
+    {
+      "id": "btv-002", "name": "Waterfront Farmers Market", "summary": "Seventy-plus vendors along the lake — produce, cider donuts, maple everything, and live fiddle near the north end.",
+      "category": "food", "town": "Burlington", "state": "Vermont",
+      "venue": { "name": "Waterfront Park", "address": "20 Lake St, Burlington, VT", "latitude": 44.4816, "longitude": -73.2216 },
+      "dayOffset": 1, "startHour": 9, "startMinute": 0, "durationMinutes": 240, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "btv-003", "name": "Flynn Presents: Chamber Series", "summary": "String quartet program of Dvořák and Florence Price in the Flynn's main hall.",
+      "category": "arts", "town": "Burlington", "state": "Vermont",
+      "venue": { "name": "Flynn Center for the Performing Arts", "address": "153 Main St, Burlington, VT", "latitude": 44.4759, "longitude": -73.2135 },
+      "dayOffset": 4, "startHour": 19, "startMinute": 30, "durationMinutes": 120, "priceLabel": "$38", "url": "https://www.flynnvt.org"
+    },
+    {
+      "id": "btv-004", "name": "Church Street Buskers Festival", "summary": "Street performers take over the Marketplace all afternoon — jugglers, a one-man band, and a contortionist by the Kiss the Cook window.",
+      "category": "community", "town": "Burlington", "state": "Vermont",
+      "venue": { "name": "Church Street Marketplace", "address": "2 Church St, Burlington, VT", "latitude": 44.4770, "longitude": -73.2124 },
+      "dayOffset": 9, "startHour": 12, "startMinute": 0, "durationMinutes": 300, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "btv-005", "name": "Late Set at Nectar's", "summary": "The room that launched Phish. Local jam bands, gravy fries until 2am.",
+      "category": "nightlife", "town": "Burlington", "state": "Vermont",
+      "venue": { "name": "Nectar's", "address": "188 Main St, Burlington, VT", "latitude": 44.4763, "longitude": -73.2119 },
+      "dayOffset": 2, "startHour": 22, "startMinute": 0, "durationMinutes": 210, "priceLabel": "$10", "url": "https://www.liveatnectars.com"
+    },
+
+    {
+      "id": "mpv-001", "name": "Lost Nation Theater: New Works Night", "summary": "Staged readings of three short plays by Vermont writers, with a talkback after.",
+      "category": "arts", "town": "Montpelier", "state": "Vermont",
+      "venue": { "name": "Lost Nation Theater", "address": "39 Main St, Montpelier, VT", "latitude": 44.2596, "longitude": -72.5760 },
+      "dayOffset": 3, "startHour": 19, "startMinute": 0, "durationMinutes": 120, "priceLabel": "$20", "url": "https://www.lostnationtheater.org"
+    },
+    {
+      "id": "mpv-002", "name": "Statehouse Lawn Summer Concert", "summary": "Brass band on the capitol lawn. Bring a blanket; the hill fills up by six.",
+      "category": "music", "town": "Montpelier", "state": "Vermont",
+      "venue": { "name": "Vermont State House Lawn", "address": "115 State St, Montpelier, VT", "latitude": 44.2624, "longitude": -72.5806 },
+      "dayOffset": 0, "startHour": 18, "startMinute": 30, "durationMinutes": 90, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "mpv-003", "name": "Capital City Cider Tasting", "summary": "Eight Vermont cideries pouring flights, with a cheese pairing table from a Cabot affiliate.",
+      "category": "food", "town": "Montpelier", "state": "Vermont",
+      "venue": { "name": "Capitol Grounds", "address": "27 State St, Montpelier, VT", "latitude": 44.2599, "longitude": -72.5749 },
+      "dayOffset": 11, "startHour": 17, "startMinute": 0, "durationMinutes": 150, "priceLabel": "$30", "url": null
+    },
+    {
+      "id": "mpv-004", "name": "Winooski River Cleanup", "summary": "Volunteer morning along the riverbank. Gloves and bags provided, coffee at the trailhead.",
+      "category": "outdoors", "town": "Montpelier", "state": "Vermont",
+      "venue": { "name": "Winooski River Path", "address": "Stone Cutters Way, Montpelier, VT", "latitude": 44.2586, "longitude": -72.5722 },
+      "dayOffset": 6, "startHour": 9, "startMinute": 0, "durationMinutes": 180, "priceLabel": "Free", "url": null
+    },
+
+    {
+      "id": "stw-001", "name": "Spruce Peak: Bluegrass on the Mountain", "summary": "Outdoor amphitheater set with the ridgeline behind the stage. Gates at five.",
+      "category": "music", "town": "Stowe", "state": "Vermont",
+      "venue": { "name": "Spruce Peak Performing Arts Center", "address": "122 Hourglass Dr, Stowe, VT", "latitude": 44.5266, "longitude": -72.7838 },
+      "dayOffset": 5, "startHour": 18, "startMinute": 0, "durationMinutes": 210, "priceLabel": "$45", "url": "https://www.sprucepeakarts.org"
+    },
+    {
+      "id": "stw-002", "name": "Trapp Family Lodge Meadow Run", "summary": "5k across the meadow trails, finishing at the bierhall. Registration includes a lager.",
+      "category": "sports", "town": "Stowe", "state": "Vermont",
+      "venue": { "name": "Trapp Family Lodge", "address": "700 Trapp Hill Rd, Stowe, VT", "latitude": 44.4747, "longitude": -72.7108 },
+      "dayOffset": 8, "startHour": 8, "startMinute": 30, "durationMinutes": 150, "priceLabel": "$35", "url": "https://www.trappfamily.com"
+    },
+    {
+      "id": "stw-003", "name": "Recreation Path Sunset Walk", "summary": "Guided naturalist walk on the 5.3-mile greenway along the West Branch.",
+      "category": "outdoors", "town": "Stowe", "state": "Vermont",
+      "venue": { "name": "Stowe Recreation Path", "address": "Main St trailhead, Stowe, VT", "latitude": 44.4676, "longitude": -72.6935 },
+      "dayOffset": 1, "startHour": 18, "startMinute": 45, "durationMinutes": 90, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "stw-004", "name": "Stowe Family Field Day", "summary": "Sack races, a bounce maze, and a fire truck the kids can climb on.",
+      "category": "family", "town": "Stowe", "state": "Vermont",
+      "venue": { "name": "Mayo Farm Events Field", "address": "Weeks Hill Rd, Stowe, VT", "latitude": 44.4585, "longitude": -72.6889 },
+      "dayOffset": 15, "startHour": 11, "startMinute": 0, "durationMinutes": 240, "priceLabel": "Free", "url": null
+    },
+
+    {
+      "id": "leb-001", "name": "Lebanon Opera House: Folk Double Bill", "summary": "Two touring songwriters trading sets in a 1924 hall with famously good acoustics.",
+      "category": "music", "town": "Lebanon", "state": "New Hampshire",
+      "venue": { "name": "Lebanon Opera House", "address": "51 N Park St, Lebanon, NH", "latitude": 43.6421, "longitude": -72.2519 },
+      "dayOffset": 2, "startHour": 19, "startMinute": 30, "durationMinutes": 150, "priceLabel": "$32", "url": "https://lebanonoperahouse.org"
+    },
+    {
+      "id": "leb-002", "name": "Colburn Park Concert Series", "summary": "Free Thursday concerts on the green through the summer. Food trucks on School Street.",
+      "category": "music", "town": "Lebanon", "state": "New Hampshire",
+      "venue": { "name": "Colburn Park", "address": "51 N Park St, Lebanon, NH", "latitude": 43.6424, "longitude": -72.2528 },
+      "dayOffset": 4, "startHour": 18, "startMinute": 0, "durationMinutes": 120, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "leb-003", "name": "Upper Valley Maker Fair", "summary": "Sixty makers — woodworkers, letterpress printers, a guy who builds cedar canoes by hand.",
+      "category": "community", "town": "Lebanon", "state": "New Hampshire",
+      "venue": { "name": "Lebanon Green", "address": "Campbell St, Lebanon, NH", "latitude": 43.6417, "longitude": -72.2536 },
+      "dayOffset": 13, "startHour": 10, "startMinute": 0, "durationMinutes": 360, "priceLabel": "Free", "url": null
+    },
+
+    {
+      "id": "hnv-001", "name": "Hopkins Center: Dance Ensemble", "summary": "Dartmouth's resident company premieres a new piece scored by a student composer.",
+      "category": "arts", "town": "Hanover", "state": "New Hampshire",
+      "venue": { "name": "Hopkins Center for the Arts", "address": "4 E Wheelock St, Hanover, NH", "latitude": 43.7016, "longitude": -72.2887 },
+      "dayOffset": 6, "startHour": 20, "startMinute": 0, "durationMinutes": 105, "priceLabel": "$18", "url": "https://hop.dartmouth.edu"
+    },
+    {
+      "id": "hnv-002", "name": "Dartmouth Green Farmers Market", "summary": "Wednesday market on the Green — Upper Valley farms, bread from Norwich, cut flowers.",
+      "category": "food", "town": "Hanover", "state": "New Hampshire",
+      "venue": { "name": "Dartmouth Green", "address": "Main St, Hanover, NH", "latitude": 43.7030, "longitude": -72.2887 },
+      "dayOffset": 3, "startHour": 15, "startMinute": 0, "durationMinutes": 180, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "hnv-003", "name": "Connecticut River Paddle", "summary": "Guided flatwater trip from Ledyard Bridge. Boats available to rent at the launch.",
+      "category": "outdoors", "town": "Hanover", "state": "New Hampshire",
+      "venue": { "name": "Ledyard Canoe Club", "address": "9 Boathouse Rd, Hanover, NH", "latitude": 43.7061, "longitude": -72.2965 },
+      "dayOffset": 10, "startHour": 9, "startMinute": 30, "durationMinutes": 180, "priceLabel": "$20", "url": null
+    },
+
+    {
+      "id": "nfd-001", "name": "Norwich University Corps Parade", "summary": "Full dress review on the upper parade ground, open to the public.",
+      "category": "community", "town": "Northfield", "state": "Vermont",
+      "venue": { "name": "Norwich University", "address": "158 Harmon Dr, Northfield, VT", "latitude": 44.1400, "longitude": -72.6600 },
+      "dayOffset": 7, "startHour": 14, "startMinute": 0, "durationMinutes": 90, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "nfd-002", "name": "Labor Day on the Common", "summary": "Chicken barbecue, a rooster-calling contest, and fireworks after dark.",
+      "category": "family", "town": "Northfield", "state": "Vermont",
+      "venue": { "name": "Northfield Common", "address": "Main St, Northfield, VT", "latitude": 44.1531, "longitude": -72.6577 },
+      "dayOffset": 12, "startHour": 12, "startMinute": 0, "durationMinutes": 480, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "nfd-003", "name": "Dog River Trail Run", "summary": "Six miles of singletrack along the river. Muddy in the low sections — wear the old shoes.",
+      "category": "sports", "town": "Northfield", "state": "Vermont",
+      "venue": { "name": "Dog River Park", "address": "Water St, Northfield, VT", "latitude": 44.1495, "longitude": -72.6544 },
+      "dayOffset": 18, "startHour": 9, "startMinute": 0, "durationMinutes": 150, "priceLabel": "$15", "url": null
+    },
+
+    {
+      "id": "bar-001", "name": "Barre Opera House: Vaudeville Revival", "summary": "An 1899 hall doing what it was built for — magic, tap, and a closing brass number.",
+      "category": "arts", "town": "Barre", "state": "Vermont",
+      "venue": { "name": "Barre Opera House", "address": "6 N Main St, Barre, VT", "latitude": 44.1966, "longitude": -72.5018 },
+      "dayOffset": 5, "startHour": 19, "startMinute": 30, "durationMinutes": 135, "priceLabel": "$28", "url": "https://barreoperahouse.org"
+    },
+    {
+      "id": "bar-002", "name": "Granite Carving Demonstration", "summary": "Watch a sculptor work a block of Barre gray with pneumatic tools. Ear protection provided.",
+      "category": "arts", "town": "Barre", "state": "Vermont",
+      "venue": { "name": "Vermont Granite Museum", "address": "7 Jones Brothers Way, Barre, VT", "latitude": 44.1926, "longitude": -72.4926 },
+      "dayOffset": 1, "startHour": 13, "startMinute": 0, "durationMinutes": 120, "priceLabel": "$8", "url": null
+    },
+    {
+      "id": "bar-003", "name": "Rock of Ages Quarry Tour", "summary": "Overlook tour of the deepest granite quarry on earth, plus the outdoor bowling lane cut from stone.",
+      "category": "outdoors", "town": "Barre", "state": "Vermont",
+      "venue": { "name": "Rock of Ages Quarry", "address": "558 Graniteville Rd, Graniteville, VT", "latitude": 44.1447, "longitude": -72.5236 },
+      "dayOffset": 14, "startHour": 10, "startMinute": 0, "durationMinutes": 90, "priceLabel": "$12", "url": null
+    },
+
+    {
+      "id": "rut-001", "name": "Paramount Theatre: Comedy Night", "summary": "Touring headliner in a restored 1913 house. Two openers, no phones.",
+      "category": "nightlife", "town": "Rutland", "state": "Vermont",
+      "venue": { "name": "Paramount Theatre", "address": "30 Center St, Rutland, VT", "latitude": 43.6096, "longitude": -72.9729 },
+      "dayOffset": 2, "startHour": 20, "startMinute": 0, "durationMinutes": 120, "priceLabel": "$35", "url": "https://www.paramountvt.org"
+    },
+    {
+      "id": "rut-002", "name": "Downtown Rutland Night Market", "summary": "Center Street closes to cars — makers, food carts, and a stage at the Merchants Row end.",
+      "category": "food", "town": "Rutland", "state": "Vermont",
+      "venue": { "name": "Center Street Marketplace", "address": "Center St, Rutland, VT", "latitude": 43.6106, "longitude": -72.9726 },
+      "dayOffset": 7, "startHour": 17, "startMinute": 0, "durationMinutes": 240, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "rut-003", "name": "Pine Hill Park Trail Day", "summary": "Volunteer trail maintenance across sixteen miles of hand-built singletrack, lunch included.",
+      "category": "outdoors", "town": "Rutland", "state": "Vermont",
+      "venue": { "name": "Pine Hill Park", "address": "Oak St Ext, Rutland, VT", "latitude": 43.6206, "longitude": -72.9878 },
+      "dayOffset": 16, "startHour": 8, "startMinute": 30, "durationMinutes": 300, "priceLabel": "Free", "url": null
+    },
+
+    {
+      "id": "wrj-001", "name": "Northern Stage: Mainstage Opening", "summary": "Opening night of the fall season at the Barrette Center, with a reception after curtain.",
+      "category": "arts", "town": "White River Junction", "state": "Vermont",
+      "venue": { "name": "Barrette Center for the Arts", "address": "74 Gates St, White River Junction, VT", "latitude": 43.6470, "longitude": -72.3208 },
+      "dayOffset": 3, "startHour": 19, "startMinute": 30, "durationMinutes": 150, "priceLabel": "$49", "url": "https://northernstage.org"
+    },
+    {
+      "id": "wrj-002", "name": "Main Street Museum Oddities Tour", "summary": "A cabinet of curiosities in an old firehouse. The curator tells the story behind every drawer.",
+      "category": "arts", "town": "White River Junction", "state": "Vermont",
+      "venue": { "name": "Main Street Museum", "address": "58 Bridge St, White River Junction, VT", "latitude": 43.6489, "longitude": -72.3197 },
+      "dayOffset": 0, "startHour": 16, "startMinute": 0, "durationMinutes": 90, "priceLabel": "Donation", "url": null
+    },
+    {
+      "id": "wrj-003", "name": "Cartoon Studies Open Studio", "summary": "The Center for Cartoon Studies opens its bullpen — students showing pages in progress.",
+      "category": "community", "town": "White River Junction", "state": "Vermont",
+      "venue": { "name": "Center for Cartoon Studies", "address": "46 S Main St, White River Junction, VT", "latitude": 43.6478, "longitude": -72.3190 },
+      "dayOffset": 9, "startHour": 17, "startMinute": 0, "durationMinutes": 120, "priceLabel": "Free", "url": null
+    },
+
+    {
+      "id": "mid-001", "name": "Town Hall Theater: Opera Live", "summary": "Live simulcast from the Met, with intermission talks from a Middlebury music professor.",
+      "category": "arts", "town": "Middlebury", "state": "Vermont",
+      "venue": { "name": "Town Hall Theater", "address": "68 S Pleasant St, Middlebury, VT", "latitude": 44.0146, "longitude": -73.1683 },
+      "dayOffset": 4, "startHour": 12, "startMinute": 55, "durationMinutes": 210, "priceLabel": "$24", "url": "https://townhalltheater.org"
+    },
+    {
+      "id": "mid-002", "name": "Otter Creek Falls Fall Festival", "summary": "Craft booths above the falls, apple pressing, and a chowder cook-off at the bridge.",
+      "category": "family", "town": "Middlebury", "state": "Vermont",
+      "venue": { "name": "Middlebury Falls", "address": "Main St, Middlebury, VT", "latitude": 44.0157, "longitude": -73.1687 },
+      "dayOffset": 8, "startHour": 10, "startMinute": 0, "durationMinutes": 300, "priceLabel": "Free", "url": null
+    },
+    {
+      "id": "mid-003", "name": "Mahaney Arts Center: Jazz Quintet", "summary": "Faculty quintet playing Mingus arrangements in the recital hall.",
+      "category": "music", "town": "Middlebury", "state": "Vermont",
+      "venue": { "name": "Mahaney Arts Center", "address": "72 Porter Field Rd, Middlebury, VT", "latitude": 44.0086, "longitude": -73.1780 },
+      "dayOffset": 12, "startHour": 19, "startMinute": 30, "durationMinutes": 100, "priceLabel": "$15", "url": null
+    },
+    {
+      "id": "mid-004", "name": "Trail Around Middlebury Hike", "summary": "Guided section hike of the TAM, sixteen miles of loop trail circling the town.",
+      "category": "outdoors", "town": "Middlebury", "state": "Vermont",
+      "venue": { "name": "Wright Park Trailhead", "address": "Seymour St, Middlebury, VT", "latitude": 44.0246, "longitude": -73.1723 },
+      "dayOffset": 19, "startHour": 9, "startMinute": 0, "durationMinutes": 240, "priceLabel": "Free", "url": null
+    }
+  ]
+}
