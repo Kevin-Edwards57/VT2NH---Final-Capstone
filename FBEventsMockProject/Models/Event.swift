@@ -92,6 +92,14 @@ struct Event: Identifiable, Hashable, Sendable {
     var isFree: Bool {
         priceLabel?.localizedCaseInsensitiveContains("free") ?? false
     }
+
+    /// Whether this event belongs to a given town. Town names are not unique
+    /// across the two states — Manchester is both a Vermont and a New
+    /// Hampshire town — so the state has to agree as well.
+    func matches(_ location: AppLocation) -> Bool {
+        town.localizedCaseInsensitiveCompare(location.town) == .orderedSame
+            && state == location.state
+    }
 }
 
 // MARK: - Date presentation

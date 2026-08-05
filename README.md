@@ -118,8 +118,10 @@ rewrite replaced it with sources that are actually open, and moved the app from
 Core Data and `ObservableObject` to SwiftData and `@Observable`.
 
 > **Note on the old version:** the original committed a Facebook access token
-> directly in source. It has been removed, but it remains in git history at
-> commit `077ae4f`. Any such token should be treated as compromised and revoked.
+> directly in source. It has been removed from the code *and* purged from every
+> commit in history, so it no longer appears anywhere in this repository. The
+> token was publicly readable before that cleanup, so it should still be treated
+> as compromised and revoked at the provider.
 
 ---
 

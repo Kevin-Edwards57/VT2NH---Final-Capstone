@@ -39,6 +39,7 @@ actor WikipediaService {
     static let shared = WikipediaService()
 
     private var cache: [String: TownProfile] = [:]
+    private var fileCache: [String: TownPhoto] = [:]
     private let session: URLSession
 
     init() {
@@ -76,6 +77,15 @@ actor WikipediaService {
                                   photo: photo)
         cache[town.id] = profile
         return profile
+    }
+
+    /// Fetches a specific Commons file with its credit and license. Used for
+    /// the state hero cards, where the Wikipedia lead image is a flag.
+    func photo(commonsFile file: String) async -> TownPhoto? {
+        if let cached = fileCache[file] { return cached }
+        guard let photo = await fetchCommonsPhoto(file: file) else { return nil }
+        fileCache[file] = photo
+        return photo
     }
 
     // MARK: Summary endpoint

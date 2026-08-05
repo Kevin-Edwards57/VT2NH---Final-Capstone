@@ -76,8 +76,9 @@ struct BundledEventProvider: EventProviding {
         return all
             .filter { event in
                 // Filed under this town, or simply close enough to it.
-                event.town.localizedCaseInsensitiveCompare(location.town) == .orderedSame
-                    || event.distance(from: center) <= radiusMeters
+                // Town name alone is not unique — Manchester exists in both
+                // states — so an exact match must agree on state too.
+                event.matches(location) || event.distance(from: center) <= radiusMeters
             }
             .sorted { $0.start < $1.start }
     }

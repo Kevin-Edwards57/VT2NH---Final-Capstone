@@ -2,7 +2,8 @@
 //  TownsView.swift
 //  VT2NH
 //
-//  Browse the ten covered towns as photo cards, grouped by state.
+//  Entry point for browsing by place: pick a state, then a town.
+//  Two large photo cards, because that is the whole choice at this level.
 //
 
 import SwiftUI
@@ -10,40 +11,30 @@ import SwiftUI
 struct TownsView: View {
     @Bindable var store: EventStore
 
-    private let columns = [GridItem(.adaptive(minimum: 260), spacing: 16)]
-
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
+                VStack(spacing: 18) {
                     ForEach(USState.allCases) { state in
-                        Section {
-                            ForEach(LocationCatalog.towns.filter { $0.state == state }) { town in
-                                NavigationLink(value: town) {
-                                    TownCard(town: town, eventCount: eventCount(for: town))
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        } header: {
-                            HStack {
-                                Text(state.rawValue)
-                                    .font(.title3.bold())
-                                Spacer()
-                            }
-                            .padding(.top, 4)
+                        NavigationLink(value: state) {
+                            StateCard(state: state, eventCount: eventCount(in: state))
                         }
+                        .buttonStyle(.plain)
                     }
+
+                    Text("Photos and descriptions from Wikipedia and Wikimedia Commons")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 4)
                 }
                 .padding()
-
-                Text("Photos and descriptions from Wikipedia and Wikimedia Commons")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom)
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Towns")
+            .navigationTitle("Browse")
+            .navigationDestination(for: USState.self) { state in
+                StateTownsView(state: state, store: store)
+            }
             .navigationDestination(for: AppLocation.self) { town in
                 TownDetailView(town: town, store: store)
             }
@@ -51,14 +42,106 @@ struct TownsView: View {
         }
     }
 
-    private func eventCount(for town: AppLocation) -> Int {
-        store.events.filter {
-            $0.town.localizedCaseInsensitiveCompare(town.town) == .orderedSame
-        }.count
+    private func eventCount(in state: USState) -> Int {
+        store.events.filter { $0.state == state }.count
     }
 }
 
-// MARK: - Card
+// MARK: - State card
+
+private struct StateCard: View {
+    let state: USState
+    let eventCount: Int
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            StatePhotoView(state: state, height: 200)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(state.rawValue)
+                    .font(.system(size: 34, weight: .bold))
+                    .foregroundStyle(.white)
+
+                Text(state.tagline)
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.9))
+                    .lineLimit(2)
+
+                HStack(spacing: 10) {
+                    Label("\(state.towns.count) towns", systemImage: "building.2.fill")
+                    Label("\(eventCount) events", systemImage: "calendar")
+                }
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.95))
+                .padding(.top, 2)
+            }
+            .padding(16)
+
+            HStack {
+                Spacer()
+                Image(systemName: "chevron.right.circle.fill")
+                    .font(.title2)
+                    .foregroundStyle(.white.opacity(0.9))
+                    .padding(16)
+            }
+        }
+        .clipShape(.rect(cornerRadius: Theme.cardCorner))
+        .overlay {
+            RoundedRectangle(cornerRadius: Theme.cardCorner)
+                .strokeBorder(Color(.separator).opacity(0.4), lineWidth: 0.5)
+        }
+    }
+}
+
+// MARK: - Towns within a state
+
+struct StateTownsView: View {
+    let state: USState
+    var store: EventStore
+
+    @State private var searchText = ""
+
+    private let columns = [GridItem(.adaptive(minimum: 260), spacing: 16)]
+
+    private var towns: [AppLocation] {
+        let query = searchText.trimmingCharacters(in: .whitespaces)
+        guard !query.isEmpty else { return state.towns }
+        return state.towns.filter { $0.town.localizedCaseInsensitiveContains(query) }
+    }
+
+    var body: some View {
+        ScrollView {
+            StatePhotoView(state: state, height: 140, showsAttribution: true)
+                .overlay(alignment: .bottomLeading) {
+                    Text(state.tagline)
+                        .font(.footnote)
+                        .foregroundStyle(.white.opacity(0.92))
+                        .padding(14)
+                }
+
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(towns) { town in
+                    NavigationLink(value: town) {
+                        TownCard(town: town, eventCount: store.events.filter { $0.matches(town) }.count)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding()
+
+            if towns.isEmpty {
+                ContentUnavailableView.search(text: searchText)
+                    .padding(.top, 40)
+            }
+        }
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle(state.rawValue)
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchText, prompt: "Search \(state.rawValue) towns")
+    }
+}
+
+// MARK: - Town card
 
 private struct TownCard: View {
     let town: AppLocation

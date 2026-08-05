@@ -19,7 +19,7 @@ struct TownDetailView: View {
 
     private var events: [Event] {
         store.events
-            .filter { $0.town.localizedCaseInsensitiveCompare(town.town) == .orderedSame }
+            .filter { $0.matches(town) }
             .sorted { $0.start < $1.start }
     }
 

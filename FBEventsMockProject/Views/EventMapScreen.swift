@@ -55,7 +55,21 @@ struct EventMapScreen: View {
                 }
             }
             .animation(.snappy, value: selectedEvent)
-            .navigationTitle("Map")
+            // Scoping Discover to a town filters these pins too. Without this
+            // the camera stays framed on both states and the remaining pins sit
+            // in one corner of an otherwise empty map.
+            .onChange(of: store.selectedTown) { _, town in
+                withAnimation(.snappy) {
+                    camera = town.map {
+                        .region(MKCoordinateRegion(
+                            center: $0.coordinate,
+                            span: MKCoordinateSpan(latitudeDelta: 0.35, longitudeDelta: 0.35)
+                        ))
+                    } ?? .region(Self.regionWide)
+                }
+                selectedEvent = nil
+            }
+            .navigationTitle(store.selectedTown?.town ?? "Map")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Event.self) { EventDetailView(event: $0) }
             .toolbar {

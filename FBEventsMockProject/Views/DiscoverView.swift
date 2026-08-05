@@ -63,7 +63,11 @@ struct DiscoverView: View {
                     Button {
                         showingTownPicker = true
                     } label: {
-                        Label("Change town", systemImage: "line.3.horizontal.decrease.circle")
+                        // Filled variant signals that a town scope is active.
+                        Label("Change town",
+                              systemImage: store.selectedTown == nil
+                                  ? "line.3.horizontal.decrease.circle"
+                                  : "line.3.horizontal.decrease.circle.fill")
                     }
                 }
             }
@@ -86,6 +90,29 @@ struct DiscoverView: View {
                      ?? "\(store.filteredEvents.count) events across \(LocationCatalog.towns.count) towns")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
+
+                // Scoping to a town is sticky and easy to forget you set. Without
+                // a visible way out, the app just looks like it only covers one
+                // town. This is that way out.
+                if let town = store.selectedTown {
+                    Button {
+                        withAnimation(.snappy) { store.selectedTown = nil }
+                    } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: "mappin.circle.fill")
+                            Text("Only \(town.town)")
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.secondary)
+                        }
+                        .font(.footnote.weight(.medium))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Theme.tint(for: town.state).opacity(0.16), in: .capsule)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 2)
+                    .accessibilityLabel("Showing only \(town.name). Tap to show all towns.")
+                }
             }
             .padding(.horizontal)
 
