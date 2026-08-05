@@ -21,14 +21,14 @@ struct EventImageView: View {
     var height: CGFloat
     var showsAttribution = false
 
-    @State private var townPhoto: TownPhoto?
+    @State private var resolved: TownPhoto?
 
-    /// The event's own artwork wins; otherwise the town's.
+    /// The event's own artwork wins; otherwise whatever resolution found.
     private var photo: TownPhoto? {
         if let imageURL = event.imageURL {
             return TownPhoto(url: imageURL, credit: nil, license: nil)
         }
-        return townPhoto
+        return resolved
     }
 
     var body: some View {
@@ -37,10 +37,19 @@ struct EventImageView: View {
                     tint: Theme.tint(for: event.category),
                     showsAttribution: showsAttribution)
             .task(id: event.id) {
-                // Only reach for a town photo when the event brought none.
-                guard event.imageURL == nil,
-                      let town = LocationCatalog.town(for: event) else { return }
-                townPhoto = await WikipediaService.shared.profile(for: town)?.photo
+                guard event.imageURL == nil else { return }
+
+                // A hand-verified photo of this exact venue, if one exists.
+                if let file = VenueImagery.commonsFile(for: event.venue.name),
+                   let venuePhoto = await WikipediaService.shared.photo(commonsFile: file) {
+                    resolved = venuePhoto
+                    return
+                }
+
+                // Otherwise the town's photo — always available, always relevant.
+                if let town = LocationCatalog.town(for: event) {
+                    resolved = await WikipediaService.shared.profile(for: town)?.photo
+                }
             }
     }
 }
