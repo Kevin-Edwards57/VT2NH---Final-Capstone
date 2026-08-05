@@ -31,6 +31,9 @@ struct EventDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                EventImageView(event: event, height: 230, showsAttribution: true)
+                    .clipShape(.rect(cornerRadius: Theme.cardCorner))
+
                 heroHeader
                 detailRows
                 if let forecast { forecastCard(forecast) }
@@ -39,7 +42,7 @@ struct EventDetailView: View {
             }
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Theme.pageBackground)
         .navigationTitle(event.town)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -85,10 +88,11 @@ struct EventDetailView: View {
             }
 
             Text(event.name)
-                .font(.largeTitle.bold())
+                .font(.display(34))
 
             Text(event.summary)
                 .font(.body)
+                .italic()
                 .foregroundStyle(.secondary)
         }
     }

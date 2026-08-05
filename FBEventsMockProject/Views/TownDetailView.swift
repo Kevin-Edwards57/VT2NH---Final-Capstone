@@ -33,7 +33,7 @@ struct TownDetailView: View {
             }
             .padding(.bottom)
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Theme.pageBackground)
         .navigationTitle(town.town)
         .navigationBarTitleDisplayMode(.inline)
         .ignoresSafeArea(edges: .top)
@@ -55,7 +55,7 @@ struct TownDetailView: View {
                     .tracking(1.2)
 
                 Text(town.town)
-                    .font(.system(size: 38, weight: .bold))
+                    .font(.display(40))
                     .foregroundStyle(.white)
 
                 Text(town.blurb)

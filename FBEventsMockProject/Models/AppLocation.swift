@@ -240,6 +240,11 @@ enum LocationCatalog {
                     fallbackCommonsFile: nil)
     ]
 
+    /// The catalog town an event is filed under, matched on name *and* state.
+    static func town(for event: Event) -> AppLocation? {
+        towns.first { event.matches($0) }
+    }
+
     static func town(named town: String) -> AppLocation? {
         towns.first { $0.town.localizedCaseInsensitiveCompare(town) == .orderedSame }
     }

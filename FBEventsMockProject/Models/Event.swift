@@ -86,6 +86,9 @@ struct Event: Identifiable, Hashable, Sendable {
     let state: USState
     let ticketURL: URL?
     let priceLabel: String?
+    /// Artwork supplied by a live source. Bundled events leave this nil and
+    /// fall back to their town's photo, which is always available.
+    var imageURL: URL? = nil
 
     var coordinate: CLLocationCoordinate2D { venue.coordinate }
 

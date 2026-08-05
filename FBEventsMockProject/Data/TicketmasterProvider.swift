@@ -91,11 +91,17 @@ private struct DiscoveryEvent: Decodable {
     let dates: Dates?
     let classifications: [Classification]?
     let priceRanges: [PriceRange]?
+    let images: [DiscoveryImage]?
     let embedded: Embedded?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, url, info, description, dates, classifications, priceRanges
+        case id, name, url, info, description, dates, classifications, priceRanges, images
         case embedded = "_embedded"
+    }
+
+    struct DiscoveryImage: Decodable {
+        let url: String?
+        let width: Int?
     }
 
     struct Dates: Decodable {
@@ -161,8 +167,17 @@ private struct DiscoveryEvent: Decodable {
             town: venue.city?.name ?? fallbackTown.town,
             state: state,
             ticketURL: url.flatMap(URL.init(string:)),
-            priceLabel: priceLabel()
+            priceLabel: priceLabel(),
+            imageURL: bestImageURL()
         )
+    }
+
+    /// Discovery returns the same artwork at many sizes. Prefer something
+    /// wide enough for a card banner without pulling a 2000px original.
+    private func bestImageURL() -> URL? {
+        let usable = (images ?? []).filter { ($0.width ?? 0) >= 640 }
+        let chosen = usable.min { ($0.width ?? 0) < ($1.width ?? 0) } ?? images?.first
+        return chosen?.url.flatMap(URL.init(string:))
     }
 
     private func parsedStart() -> Date? {

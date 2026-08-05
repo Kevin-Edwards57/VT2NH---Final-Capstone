@@ -27,6 +27,7 @@ final class SavedEvent {
     var stateRaw: String
     var ticketURLString: String?
     var priceLabel: String?
+    var imageURLString: String?
     var savedAt: Date
 
     init(event: Event, savedAt: Date = .now) {
@@ -44,6 +45,7 @@ final class SavedEvent {
         self.stateRaw = event.state.rawValue
         self.ticketURLString = event.ticketURL?.absoluteString
         self.priceLabel = event.priceLabel
+        self.imageURLString = event.imageURL?.absoluteString
         self.savedAt = savedAt
     }
 
@@ -70,6 +72,7 @@ final class SavedEvent {
               town: town,
               state: state,
               ticketURL: ticketURL,
-              priceLabel: priceLabel)
+              priceLabel: priceLabel,
+              imageURL: imageURLString.flatMap(URL.init(string:)))
     }
 }

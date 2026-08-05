@@ -1,7 +1,7 @@
 # VT2NH
 
 An iOS event-discovery app for Vermont and New Hampshire. Browse what's happening
-across ten towns, filter by category, see it on a map, check the forecast for the
+across 30 towns in both states, filter by category, see it on a map, check the forecast for the
 day of the event, and save what you want to go to.
 
 Built with SwiftUI, SwiftData, MapKit, and EventKit. Every data source is free
@@ -11,9 +11,9 @@ and requires no paid plan.
 
 ## Screens
 
-| Discover | Towns | Map | Saved |
+| Discover | Browse | Map | Saved |
 |---|---|---|---|
-| Search and filter events, grouped into Today / Tomorrow / This Week / Later | Photo cards for all ten towns, each with a Wikipedia summary and article link | Every event as a category-tinted pin across both states | Bookmarked events, split into upcoming and past |
+| Search and filter events, grouped into Today / Tomorrow / This Week / Later | Pick a state, then a town — each with a photo, Wikipedia summary, and article link | Every event as a category-tinted pin across both states | Bookmarked events, split into upcoming and past |
 
 ---
 
@@ -23,7 +23,7 @@ All free. No paid tier, no credit card.
 
 | Source | What it provides | Key required | Limits |
 |---|---|---|---|
-| **Bundled feed** (`Data/events.json`) | 35 sample events across ten towns | No | None — works offline |
+| **Bundled feed** (`Data/events.json`) | 105 sample events across 30 towns | No | None — works offline |
 | **[Ticketmaster Discovery](https://developer.ticketmaster.com)** | Real ticketed events near a town | Yes, free | 5,000 req/day |
 | **[Open-Meteo](https://open-meteo.com)** | Forecast for each event's date and coordinates | **No** | 10,000 req/day |
 | **[Wikipedia REST](https://en.wikipedia.org/api/rest_v1/)** / **Wikimedia Commons** | Town photos, summaries, article links | **No** | Fair use, needs a User-Agent |
@@ -68,7 +68,8 @@ Pick any simulator and run. No configuration needed.
 Models/     Event, EventCategory, Venue, AppLocation, SavedEvent (@Model)
 Data/       EventProviding protocol + two implementations, EventStore (@Observable),
             WeatherService, WikipediaService, LocationProvider, Secrets
-Views/      Discover, Towns, TownDetail, Map, Saved, EventDetail + components
+Views/      Discover, Towns (state chooser), StateTowns, TownDetail, Map,
+            Saved, EventDetail + components
 Theme/      Color and surface decisions in one place
 ```
 
@@ -89,6 +90,9 @@ redraw the map.
 
 ## Notable details
 
+- **Town names are not unique.** Manchester is a town in *both* states, so
+  matching events to a town by name alone silently mixed the two. Matching
+  requires the state to agree.
 - **Photo fallbacks.** Wikipedia's lead image for small villages is often a
   county locator map rather than a photograph. The app detects these and
   substitutes a curated Wikimedia Commons photo — which is why White River
@@ -104,9 +108,10 @@ redraw the map.
 
 ## Sample data
 
-`Data/events.json` is clearly-labeled sample content written for this project.
-Venues are real places in these towns; coordinates are approximate. It exists so
-the app is fully functional the moment it's cloned, with no signup step.
+`Data/events.json` is clearly-labeled sample content written for this project:
+105 events across all 30 towns. Venues are real places in those towns and venue
+coordinates are approximate, offset from each town's Wikipedia centroid. It
+exists so the app is fully functional the moment it's cloned, with no signup step.
 
 ---
 

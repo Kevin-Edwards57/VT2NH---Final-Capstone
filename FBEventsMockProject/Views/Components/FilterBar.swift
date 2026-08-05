@@ -61,7 +61,7 @@ private struct Chip: View {
                 if isOn {
                     Capsule().fill(tint.gradient)
                 } else {
-                    Capsule().fill(Color(.secondarySystemGroupedBackground))
+                    Capsule().fill(Theme.cardBackground)
                     Capsule().strokeBorder(Color(.separator), lineWidth: 0.5)
                 }
             }

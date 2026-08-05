@@ -30,7 +30,7 @@ struct TownsView: View {
                 }
                 .padding()
             }
-            .background(Color(.systemGroupedBackground))
+            .background(Theme.pageBackground)
             .navigationTitle("Browse")
             .navigationDestination(for: USState.self) { state in
                 StateTownsView(state: state, store: store)
@@ -59,7 +59,7 @@ private struct StateCard: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(state.rawValue)
-                    .font(.system(size: 34, weight: .bold))
+                    .font(.display(36))
                     .foregroundStyle(.white)
 
                 Text(state.tagline)
@@ -134,7 +134,7 @@ struct StateTownsView: View {
                     .padding(.top, 40)
             }
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Theme.pageBackground)
         .navigationTitle(state.rawValue)
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $searchText, prompt: "Search \(state.rawValue) towns")
@@ -154,7 +154,7 @@ private struct TownCard: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(town.town)
-                        .font(.title3.bold())
+                        .font(.display(.title2))
                         .foregroundStyle(.white)
                     Text(town.state.abbreviation)
                         .font(.caption.weight(.semibold))
@@ -166,6 +166,7 @@ private struct TownCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(town.blurb)
                     .font(.footnote)
+                    .italic()
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)

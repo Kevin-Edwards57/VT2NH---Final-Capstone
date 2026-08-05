@@ -52,7 +52,7 @@ struct DiscoverView: View {
                 }
                 .padding(.vertical)
             }
-            .background(Color(.systemGroupedBackground))
+            .background(Theme.pageBackground)
             .navigationTitle("Discover")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Event.self) { EventDetailView(event: $0) }
@@ -81,14 +81,22 @@ struct DiscoverView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(store.selectedTown?.name ?? "Vermont & New Hampshire")
-                    .font(.largeTitle.bold())
+            VStack(alignment: .leading, spacing: 8) {
+                // Masthead — an overline, a serif title, and a rule beneath.
+                Text(store.selectedTown.map { "\($0.state.rawValue) · \($0.state.abbreviation)" }
+                     ?? "Vermont & New Hampshire")
+                    .overline()
+
+                Text(store.selectedTown?.town ?? "What's On")
+                    .font(.display(40))
                     .contentTransition(.numericText())
+
+                Rule().padding(.trailing, 40)
 
                 Text(store.selectedTown?.blurb
                      ?? "\(store.filteredEvents.count) events across \(LocationCatalog.towns.count) towns")
-                    .font(.subheadline)
+                    .font(.callout)
+                    .italic()
                     .foregroundStyle(.secondary)
 
                 // Scoping to a town is sticky and easy to forget you set. Without
@@ -178,16 +186,19 @@ struct SectionHeader: View {
     let count: Int
 
     var body: some View {
-        HStack {
-            Text(title)
-                .font(.title3.bold())
-            Text("\(count)")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.secondary)
-            Spacer()
+        VStack(spacing: 6) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(title)
+                    .font(.display(.title3))
+                Spacer()
+                Text("\(count)")
+                    .overline()
+            }
+            Rule(opacity: 0.25)
         }
         .padding(.horizontal)
-        .padding(.vertical, 8)
+        .padding(.top, 10)
+        .padding(.bottom, 6)
         .background(.bar)
     }
 }
