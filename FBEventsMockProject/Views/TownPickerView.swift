@@ -3,7 +3,7 @@
 //  VT2NH
 //
 //  Sheet for choosing the town to browse. Offers the whole region, the town
-//  nearest the user when location is available, and the ten covered towns
+//  nearest the user when location is available, and every covered town
 //  grouped by state.
 //
 
@@ -19,8 +19,10 @@ struct TownPickerView: View {
         NavigationStack {
             List {
                 Section {
+                    // Derived, not hardcoded — adding a town to the catalog
+                    // must not silently make this label a lie.
                     row(title: "Vermont & New Hampshire",
-                        subtitle: "Everything, all ten towns",
+                        subtitle: "Everything, all \(LocationCatalog.towns.count) towns",
                         symbol: "map.fill",
                         tint: .accentColor,
                         isSelected: store.selectedTown == nil) {

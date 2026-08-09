@@ -93,15 +93,39 @@ final class EventStore {
         sourceLabel = label
     }
 
-    /// Ticketmaster and the bundled feed can describe the same show. Same name
-    /// on the same calendar day is close enough to call it a duplicate.
+    /// Ticketmaster and the bundled feed can describe the same show, so the
+    /// same event in the same place on the same day collapses to one row.
+    ///
+    /// Identity is name + day + **town + state**. Location has to be part of
+    /// the key: across 30 towns, two places can easily run identically named
+    /// events — a "Farmers Market" on the same Saturday — and keying on name
+    /// and day alone would silently delete one of them. State is included
+    /// because town names are not unique either; Manchester is in both.
+    ///
+    /// The event ID is deliberately *not* part of the key. Different providers
+    /// assign different IDs to the same real-world event, so including it
+    /// would defeat the deduplication entirely.
     private static func deduplicated(_ events: [Event]) -> [Event] {
         var seen = Set<String>()
         return events.filter { event in
             let day = Calendar.current.startOfDay(for: event.start)
-            let key = "\(event.name.lowercased())|\(day.timeIntervalSince1970)"
+            let key = [
+                normalized(event.name),
+                String(day.timeIntervalSince1970),
+                normalized(event.town),
+                event.state.rawValue
+            ].joined(separator: "|")
             return seen.insert(key).inserted
         }
+    }
+
+    /// Trims surrounding whitespace and newlines, then case- and
+    /// diacritic-folds. Locale-independent on purpose: the same two records
+    /// must collapse identically regardless of the device's region, and feeds
+    /// differ on padding and accents ("Dvořák" vs "Dvorak").
+    private static func normalized(_ text: String) -> String {
+        text.trimmingCharacters(in: .whitespacesAndNewlines)
+            .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil)
     }
 
     // MARK: Derived
