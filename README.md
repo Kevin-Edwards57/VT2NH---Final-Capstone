@@ -7,6 +7,9 @@ day of the event, and save what you want to go to.
 Built with SwiftUI, SwiftData, MapKit, and EventKit. Every data source is free
 and requires no paid plan.
 
+**[→ System architecture](ARCHITECTURE.md)** — layer diagrams, the two-source
+loading model, image-resolution cascade, and the degradation matrix.
+
 ---
 
 ## What it does
@@ -77,12 +80,32 @@ Pick any simulator and run. No configuration needed.
 Full write-up with diagrams: **[ARCHITECTURE.md](ARCHITECTURE.md)**
 
 ```
-Models/     Event, EventCategory, Venue, AppLocation, SavedEvent (@Model)
-Data/       EventProviding protocol + two implementations, EventStore (@Observable),
-            WeatherService, WikipediaService, LocationProvider, VenueImagery, Secrets
-Views/      Discover, Towns (state chooser), StateTowns, TownDetail, Map,
-            Saved, EventDetail + components
-Theme/      Color and surface decisions in one place
+FBEventsMockProject/
+├── Models/
+│   ├── Event.swift             Event, Venue, EventCategory, TimeBucket
+│   ├── AppLocation.swift       USState, AppLocation, LocationCatalog (30 towns)
+│   └── SavedEvent.swift        SwiftData @Model
+├── Data/
+│   ├── EventProviding.swift    The source protocol
+│   ├── BundledEventProvider    events.json — offline, no key
+│   ├── TicketmasterProvider    Live events — optional, free key
+│   ├── EventStore.swift        @Observable state: merge, filter, group
+│   ├── WeatherService.swift    Open-Meteo, keyless
+│   ├── WikipediaService.swift  Town photos, summaries, Commons credit
+│   ├── VenueImagery.swift      Hand-verified venue photographs
+│   ├── LocationProvider.swift  One-shot CoreLocation for "near me"
+│   ├── Secrets.swift           Reads the gitignored Secrets.plist
+│   └── events.json             105 sample events across 30 towns
+├── Views/
+│   ├── RootView.swift          TabView shell
+│   ├── DiscoverView.swift      Search, filters, time-bucketed sections
+│   ├── TownsView.swift         State chooser → town grid
+│   ├── TownDetailView.swift    Hero photo, Wikipedia, that town's events
+│   ├── EventMapScreen.swift    Category-tinted pins
+│   ├── EventDetailView.swift   Forecast, calendar, directions, save
+│   ├── SavedEventsView.swift   @Query-backed, upcoming vs past
+│   └── Components/             EventCard, FilterBar, photo banners
+└── Theme/Theme.swift           Color, type, and surface decisions
 ```
 
 Event sources sit behind a single protocol:
@@ -136,9 +159,11 @@ Core Data and `ObservableObject` to SwiftData and `@Observable`.
 
 > **Note on the old version:** the original committed a Facebook access token
 > directly in source. It has been removed from the code *and* purged from every
-> commit in history, so it no longer appears anywhere in this repository. The
-> token was publicly readable before that cleanup, so it should still be treated
-> as compromised and revoked at the provider.
+> commit in history, so it no longer appears anywhere in this repository.
+> Verified against the provider: the token was a 60-day page token that expired
+> on 1 June 2025, so it was already inert. Keys now load from a gitignored
+> `Secrets.plist`, and a missing key disables one optional feature rather than
+> breaking the app.
 
 ---
 
@@ -154,6 +179,22 @@ Tracked honestly rather than omitted:
 - **App icon** is the original capstone artwork.
 - **iPad and accessibility** have not had a dedicated pass. Dynamic Type is
   respected via semantic fonts but has not been audited at the largest sizes.
+
+---
+
+## What's next
+
+Honest list of what this does not have yet.
+
+- **No test target.** The highest-value units to cover are `TimeBucket`
+  bucketing, `EventStore` dedupe, day-offset resolution, and the
+  `Event.matches(_:)` state check that keeps the two Manchesters apart.
+- **No privacy manifest.** `PrivacyInfo.xcprivacy` is required for App Store
+  submission. The app does no tracking, but the manifest still has to declare it.
+- **App icon is a placeholder** carried over from the original capstone.
+- **Accessibility not audited.** Dynamic Type and VoiceOver need a real pass;
+  the serif display sizes in particular use fixed point sizes in a few places.
+- **iPad layout untested.** The grid adapts, but nothing has been verified there.
 
 ---
 
