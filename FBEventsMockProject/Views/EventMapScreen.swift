@@ -43,15 +43,40 @@ struct EventMapScreen: View {
                     .padding(.vertical, 8)
                     .background(.bar)
             }
+            // A carousel rather than a single card: you can browse what is on
+            // the map without hunting for pins, and selecting either the pin or
+            // the card keeps both in sync.
             .safeAreaInset(edge: .bottom) {
-                if let selectedEvent {
-                    NavigationLink(value: selectedEvent) {
-                        EventCard(event: selectedEvent)
+                if !store.filteredEvents.isEmpty {
+                    ScrollViewReader { proxy in
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 10) {
+                                ForEach(store.filteredEvents) { event in
+                                    NavigationLink(value: event) {
+                                        CompactEventRow(event: event)
+                                            .frame(width: 290)
+                                            .overlay {
+                                                RoundedRectangle(cornerRadius: Theme.cardCorner)
+                                                    .strokeBorder(
+                                                        selectedEvent == event
+                                                            ? Theme.tint(for: event.category)
+                                                            : .clear,
+                                                        lineWidth: 2)
+                                            }
+                                    }
+                                    .buttonStyle(.plain)
+                                    .id(event.id)
+                                }
+                            }
                             .padding(.horizontal)
                             .padding(.bottom, 8)
+                        }
+                        .scrollIndicators(.hidden)
+                        .onChange(of: selectedEvent) { _, event in
+                            guard let event else { return }
+                            withAnimation(.snappy) { proxy.scrollTo(event.id, anchor: .center) }
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
             .animation(.snappy, value: selectedEvent)

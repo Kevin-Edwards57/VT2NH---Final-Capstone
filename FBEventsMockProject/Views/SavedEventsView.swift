@@ -29,22 +29,28 @@ struct SavedEventsView: View {
                 } else {
                     List {
                         if !upcoming.isEmpty {
-                            Section("Upcoming") {
+                            Section {
                                 ForEach(upcoming) { row($0) }
                                     .onDelete { delete(upcoming, at: $0) }
+                            } header: {
+                                Text("Upcoming").overline()
                             }
                         }
 
                         if !past.isEmpty {
-                            Section("Past") {
-                                ForEach(past) { row($0).opacity(0.55) }
+                            Section {
+                                ForEach(past) { row($0).opacity(0.5) }
                                     .onDelete { delete(past, at: $0) }
+                            } header: {
+                                Text("Past").overline()
                             }
                         }
                     }
-                    .listStyle(.insetGrouped)
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
                 }
             }
+            .background(Theme.pageBackground)
             .navigationTitle("Saved")
             .navigationDestination(for: Event.self) { EventDetailView(event: $0) }
             .toolbar {
@@ -55,22 +61,15 @@ struct SavedEventsView: View {
         }
     }
 
+    /// Reuses the same row the rest of the app uses, so a saved event looks
+    /// like the event you saved.
     private func row(_ saved: SavedEvent) -> some View {
         NavigationLink(value: saved.asEvent) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(saved.name)
-                    .font(.headline)
-                Label(saved.asEvent.fullDateLabel, systemImage: "clock")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Label("\(saved.venueName) · \(saved.town), \(saved.state.abbreviation)",
-                      systemImage: "mappin.and.ellipse")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
-            .padding(.vertical, 4)
+            CompactEventRow(event: saved.asEvent, isSaved: true)
         }
+        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 
     private func delete(_ source: [SavedEvent], at offsets: IndexSet) {

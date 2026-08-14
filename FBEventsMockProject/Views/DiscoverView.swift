@@ -23,20 +23,28 @@ struct DiscoverView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 20, pinnedViews: [.sectionHeaders]) {
+                LazyVStack(alignment: .leading, spacing: 12, pinnedViews: [.sectionHeaders]) {
                     header
 
                     if store.isLoading && store.events.isEmpty {
-                        loadingState
+                        SkeletonFeed()
                     } else if store.filteredEvents.isEmpty {
                         emptyState
                     } else {
                         ForEach(store.sections, id: \.bucket.id) { section in
                             Section {
-                                ForEach(section.events) { event in
+                                // Each section leads with one full-width hero and
+                                // lists the rest densely. Uniform cards across 105
+                                // events give the eye nothing to anchor on.
+                                ForEach(Array(section.events.enumerated()), id: \.element.id) { index, event in
                                     NavigationLink(value: event) {
-                                        EventCard(event: event,
-                                                  isSaved: savedIDs.contains(event.id))
+                                        if index == 0 {
+                                            EventCard(event: event,
+                                                      isSaved: savedIDs.contains(event.id))
+                                        } else {
+                                            CompactEventRow(event: event,
+                                                            isSaved: savedIDs.contains(event.id))
+                                        }
                                     }
                                     .buttonStyle(.plain)
                                     .padding(.horizontal)
@@ -137,17 +145,6 @@ struct DiscoverView: View {
     }
 
     // MARK: States
-
-    private var loadingState: some View {
-        VStack(spacing: 12) {
-            ProgressView()
-            Text("Loading events…")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 60)
-    }
 
     private var emptyState: some View {
         ContentUnavailableView {

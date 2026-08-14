@@ -125,12 +125,20 @@ extension Event {
         start.formatted(.dateTime.weekday(.wide).month(.wide).day()) + " · " + timeLabel
     }
 
-    /// "Today" / "Tomorrow" / "In 3 days" — the relative badge on a card.
+    /// "Today" / "Tomorrow" / "Friday" / "In 12 days" — the badge on a card.
+    ///
+    /// Past events fall back to an absolute date. A saved event that has
+    /// already happened would otherwise be labelled with a bare weekday, which
+    /// reads as though it is still coming up.
     var relativeLabel: String {
         let calendar = Calendar.current
         if calendar.isDateInToday(start) { return "Today" }
         if calendar.isDateInTomorrow(start) { return "Tomorrow" }
+
         let days = calendar.dateComponents([.day], from: .now, to: start).day ?? 0
+        if days < 0 {
+            return start.formatted(.dateTime.month(.abbreviated).day())
+        }
         return days <= 7 ? start.formatted(.dateTime.weekday(.wide)) : "In \(days) days"
     }
 
