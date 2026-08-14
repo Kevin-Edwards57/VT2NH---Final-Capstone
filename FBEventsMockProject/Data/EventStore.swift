@@ -93,6 +93,10 @@ final class EventStore {
         sourceLabel = label
     }
 
+    /// Pure and stateless, so it is `nonisolated` despite the type being
+    /// `@MainActor` — it touches nothing that needs the main actor, and this
+    /// lets it be called (and tested) from any context.
+    ///
     /// Ticketmaster and the bundled feed can describe the same show, so the
     /// same event in the same place on the same day collapses to one row.
     ///
@@ -105,7 +109,7 @@ final class EventStore {
     /// The event ID is deliberately *not* part of the key. Different providers
     /// assign different IDs to the same real-world event, so including it
     /// would defeat the deduplication entirely.
-    private static func deduplicated(_ events: [Event]) -> [Event] {
+    nonisolated static func deduplicated(_ events: [Event]) -> [Event] {
         var seen = Set<String>()
         return events.filter { event in
             let day = Calendar.current.startOfDay(for: event.start)
@@ -123,7 +127,7 @@ final class EventStore {
     /// diacritic-folds. Locale-independent on purpose: the same two records
     /// must collapse identically regardless of the device's region, and feeds
     /// differ on padding and accents ("Dvořák" vs "Dvorak").
-    private static func normalized(_ text: String) -> String {
+    nonisolated static func normalized(_ text: String) -> String {
         text.trimmingCharacters(in: .whitespacesAndNewlines)
             .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil)
     }

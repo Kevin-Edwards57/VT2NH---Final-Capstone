@@ -28,6 +28,8 @@ struct DiscoverView: View {
 
                     if store.isLoading && store.events.isEmpty {
                         SkeletonFeed()
+                    } else if let loadError = store.loadError, store.events.isEmpty {
+                        failureState(loadError)
                     } else if store.filteredEvents.isEmpty {
                         emptyState
                     } else {
@@ -145,6 +147,23 @@ struct DiscoverView: View {
     }
 
     // MARK: States
+
+    /// Shown only when nothing could be loaded at all. A live-source failure
+    /// never lands here — that degrades quietly because the bundled feed still
+    /// produced a full list.
+    private func failureState(_ message: String) -> some View {
+        ContentUnavailableView {
+            Label("Couldn't load events", systemImage: "exclamationmark.triangle")
+        } description: {
+            Text(message)
+        } actions: {
+            Button("Try Again") {
+                Task { await store.load() }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(.top, 40)
+    }
 
     private var emptyState: some View {
         ContentUnavailableView {

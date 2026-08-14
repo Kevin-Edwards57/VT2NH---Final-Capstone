@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  VT2NH collects nothing and tracks nobody.
+
+	  Location: requested only when the user taps "Find the town nearest me".
+	  It is used on-device to sort the town list by distance and is never
+	  transmitted, stored, or linked to an identity.
+
+	  Network: requests go to Open-Meteo, Wikipedia, Wikimedia Commons, and
+	  optionally Ticketmaster. They carry venue coordinates and event queries —
+	  never user data.
+
+	  Required-reason APIs: none are used. Verified by search across the target.
+	-->
+	<key>NSPrivacyTracking</key>
+	<false/>
+
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
+</dict>
+</plist>

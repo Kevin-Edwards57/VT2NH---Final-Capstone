@@ -8,7 +8,18 @@
 
 /* Begin PBXFileReference section */
 		5572CF282DA9E557002CD594 /* FBEventsMockProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBEventsMockProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0001000000000000000002 /* VT2NHTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VT2NHTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXContainerItemProxy section */
+		AA000100000000000000000B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5572CF202DA9E557002CD594 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5572CF272DA9E557002CD594;
+			remoteInfo = FBEventsMockProject;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5572CF2A2DA9E557002CD594 /* FBEventsMockProject */ = {
@@ -16,10 +27,22 @@
 			path = FBEventsMockProject;
 			sourceTree = "<group>";
 		};
+		AA0001000000000000000003 /* VT2NHTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VT2NHTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5572CF252DA9E557002CD594 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0001000000000000000005 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				5572CF2A2DA9E557002CD594 /* FBEventsMockProject */,
+				AA0001000000000000000003 /* VT2NHTests */,
 				5572CF292DA9E557002CD594 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				5572CF282DA9E557002CD594 /* FBEventsMockProject.app */,
+				AA0001000000000000000002 /* VT2NHTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 5572CF282DA9E557002CD594 /* FBEventsMockProject.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AA0001000000000000000001 /* VT2NHTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0001000000000000000007 /* Build configuration list for PBXNativeTarget "VT2NHTests" */;
+			buildPhases = (
+				AA0001000000000000000004 /* Sources */,
+				AA0001000000000000000005 /* Frameworks */,
+				AA0001000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA000100000000000000000A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AA0001000000000000000003 /* VT2NHTests */,
+			);
+			name = VT2NHTests;
+			packageProductDependencies = (
+			);
+			productName = VT2NHTests;
+			productReference = AA0001000000000000000002 /* VT2NHTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					5572CF272DA9E557002CD594 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					AA0001000000000000000001 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 5572CF272DA9E557002CD594;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				5572CF272DA9E557002CD594 /* FBEventsMockProject */,
+				AA0001000000000000000001 /* VT2NHTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5572CF262DA9E557002CD594 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA0001000000000000000006 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA0001000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA000100000000000000000A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5572CF272DA9E557002CD594 /* FBEventsMockProject */;
+			targetProxy = AA000100000000000000000B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5572CF392DA9E558002CD594 /* Debug */ = {
@@ -268,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KevinEdwards1010.FBEventsMockProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevinedwards.vt2nh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -300,11 +375,51 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KevinEdwards1010.FBEventsMockProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevinedwards.vt2nh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AA0001000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W2B27X8566;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevinedwards.vt2nh.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FBEventsMockProject.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FBEventsMockProject";
+			};
+			name = Debug;
+		};
+		AA0001000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W2B27X8566;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevinedwards.vt2nh.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FBEventsMockProject.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FBEventsMockProject";
 			};
 			name = Release;
 		};
@@ -325,6 +440,15 @@
 			buildConfigurations = (
 				5572CF3C2DA9E558002CD594 /* Debug */,
 				5572CF3D2DA9E558002CD594 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0001000000000000000007 /* Build configuration list for PBXNativeTarget "VT2NHTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0001000000000000000008 /* Debug */,
+				AA0001000000000000000009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

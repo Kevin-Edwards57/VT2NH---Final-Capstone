@@ -75,6 +75,22 @@ Pick any simulator and run. No configuration needed.
 
 ---
 
+## Tests
+
+```bash
+xcodebuild test -project FBEventsMockProject.xcodeproj \
+  -scheme FBEventsMockProject \
+  -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
+```
+
+33 tests across 6 suites, covering the logic most likely to lose data silently:
+the deduplication identity, town/state matching (the two Manchesters), time
+bucketing, event labelling, and the bundled feed's integrity — every event maps
+to a catalog town, every town has events, no date resolves to the past, and
+deduplication discards nothing.
+
+---
+
 ## Architecture
 
 Full write-up with diagrams: **[ARCHITECTURE.md](ARCHITECTURE.md)**
@@ -186,15 +202,14 @@ Tracked honestly rather than omitted:
 
 Honest list of what this does not have yet.
 
-- **No test target.** The highest-value units to cover are `TimeBucket`
-  bucketing, `EventStore` dedupe, day-offset resolution, and the
-  `Event.matches(_:)` state check that keeps the two Manchesters apart.
-- **No privacy manifest.** `PrivacyInfo.xcprivacy` is required for App Store
-  submission. The app does no tracking, but the manifest still has to declare it.
-- **App icon is a placeholder** carried over from the original capstone.
-- **Accessibility not audited.** Dynamic Type and VoiceOver need a real pass;
-  the serif display sizes in particular use fixed point sizes in a few places.
+- **Event data is a bundled sample feed.** Real venues, but the events are
+  written for this project. Configuring a Ticketmaster key adds live listings
+  for the larger venues; small-town events would need another source.
+- **Accessibility not fully audited.** Dynamic Type and VoiceOver need a real
+  pass; a few serif display sizes are fixed point values.
 - **iPad layout untested.** The grid adapts, but nothing has been verified there.
+- **No CI.** Tests exist and pass locally, but nothing runs them automatically
+  on push.
 
 ---
 
