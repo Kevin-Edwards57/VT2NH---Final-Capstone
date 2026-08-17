@@ -40,6 +40,8 @@ final class EventStore {
 
     private let bundled = BundledEventProvider()
     private let live = TicketmasterProvider()
+    /// Real events from public library calendars. Keyless, so it always runs.
+    private let calendars = CalendarFeedProvider()
     private let radiusMiles = 25
 
     /// Geographic middle of the coverage area, used when no town is selected.
@@ -74,6 +76,17 @@ final class EventStore {
         }
         var label = bundled.attribution
 
+        // Public calendar feeds: real events, no key required, so this always
+        // runs. Failures are already swallowed inside the provider — one
+        // library being unreachable must not empty the screen.
+        let feedEvents = selectedTown == nil
+            ? await calendars.allEvents()
+            : ((try? await calendars.events(near: target, radiusMiles: radiusMiles)) ?? [])
+        if !feedEvents.isEmpty {
+            merged.append(contentsOf: feedEvents)
+            label = "\(calendars.attribution) + sample feed"
+        }
+
         // Live data is a bonus. A failure here is not an error the user needs
         // to see — they still have a full list.
         if let live {
@@ -82,7 +95,9 @@ final class EventStore {
                 let liveEvents = try await live.events(near: target, radiusMiles: liveRadius)
                 if !liveEvents.isEmpty {
                     merged.append(contentsOf: liveEvents)
-                    label = "\(live.attribution) + sample feed"
+                    label = feedEvents.isEmpty
+                        ? "\(live.attribution) + sample feed"
+                        : "\(live.attribution) + library calendars + sample feed"
                 }
             } catch {
                 label = bundled.attribution + " (live feed unavailable)"
