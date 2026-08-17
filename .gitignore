@@ -1,0 +1,23 @@
+# Secrets — never commit real API keys.
+# Copy Secrets.example.plist to Secrets.plist and edit that instead.
+FBEventsMockProject/Secrets.plist
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# macOS
+.DS_Store
