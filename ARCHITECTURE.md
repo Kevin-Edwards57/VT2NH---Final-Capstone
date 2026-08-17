@@ -31,6 +31,7 @@ flowchart TB
     subgraph D["Data sources"]
         Proto{{"EventProviding<br/><i>protocol</i>"}}
         Bundled["BundledEventProvider<br/><i>events.json</i>"]
+        Cal["CalendarFeedProvider<br/><i>public .ics, keyless</i>"]
         TM["TicketmasterProvider<br/><i>optional</i>"]
         Wiki["WikipediaService<br/><i>actor</i>"]
         Weather["WeatherService<br/><i>actor</i>"]
@@ -48,7 +49,7 @@ flowchart TB
     Disc & Towns & MapS --> Store
     Disc --> Loc
     Store --> Proto
-    Proto -.implements.-> Bundled & TM
+    Proto -.implements.-> Bundled & Cal & TM
     TM --> Secrets
     Detail --> Weather
     Towns --> Wiki
@@ -67,48 +68,64 @@ holds an array of `EventProviding`. Swapping in a different feed touches one fil
 
 ## 2. Event loading
 
-Two sources, merged. One is guaranteed, one is optional.
+Three sources, merged. One is guaranteed, two are best-effort.
 
 ```mermaid
 sequenceDiagram
     participant U as User
     participant S as EventStore
     participant B as BundledEventProvider
+    participant C as CalendarFeedProvider
     participant T as TicketmasterProvider
 
     U->>S: load()
-    S->>B: events(near:radius:)
+    S->>B: allEvents()
     B->>B: decode events.json
     B->>B: resolve dayOffset → Date
     B-->>S: [Event] (always succeeds)
+
+    S->>C: allEvents()
+    par one task per feed
+        C->>C: GET .ics, parse, drop past entries
+    end
+    Note over C: a failed feed yields []<br/>rather than throwing
+    C-->>S: real events
 
     alt key configured
         S->>T: events(near:radius:)
         alt HTTP 200
             T-->>S: [Event] with artwork
-            S->>S: merge + dedupe
         else 429 / 5xx / offline
-            T-->>S: throws
-            Note over S: swallowed — label says<br/>"live feed unavailable"
+            T-->>S: throws → swallowed
         end
     else no key
-        Note over S: TicketmasterProvider<br/>is nil, skipped entirely
+        Note over S: provider is nil,<br/>skipped entirely
     end
 
-    S->>S: sort by start date
+    S->>S: deduplicate, sort by start
     S-->>U: events + sourceLabel
 ```
 
 **Why the bundled feed exists.** A recruiter cloning this repo gets a fully
-working app with no signup step. It is also the floor that makes live-source
+working app with no signup step. It is also the floor that makes any live-source
 failure a non-event rather than an empty screen.
 
 **Why day offsets.** `events.json` stores `dayOffset: 3` rather than a date. The
 provider resolves offsets against *today* at load. A demo opened a year from now
 still shows a full week of upcoming events instead of a dead calendar.
 
-**Dedupe.** Both sources can describe the same show. The key is
-`lowercased(name) + startOfDay(start)` — same show, same day, one row.
+**Why calendar feeds.** iCalendar is an open format served over plain HTTP, so
+this is the only source of genuinely real events that needs no key, no account
+and no quota. Coverage is limited by what venues publish: of roughly 60 library,
+museum, theatre, college and municipal sites probed, seven have a working
+`.ics`, covering six of the 31 towns.
+
+**Dedupe.** Any two sources can describe the same show. The identity is
+`normalized(name) + startOfDay(start) + normalized(town) + state`. Location is
+part of the key because two towns can run identically named events on the same
+day — a Farmers Market on the same Saturday — and state is part of it because
+town names are not unique either. The event ID is deliberately excluded, since
+providers assign different IDs to the same real-world event.
 
 ---
 
@@ -208,7 +225,8 @@ experience instead.
 |---|---|
 | No Ticketmaster key | Bundled feed only; live source never constructed |
 | Ticketmaster rate-limited or down | Bundled feed only; footer notes it |
-| No network at all | Full event list, gradient art, no forecasts, no town photos |
+| A calendar feed is down or malformed | That venue's events are dropped; every other feed still loads |
+| No network at all | Full event list from the bundle, gradient art, no forecasts, no town photos |
 | Event > 16 days out | Forecast row omitted rather than guessed |
 | Location denied | "Near me" unavailable; every other feature unaffected |
 | Wikipedia unreachable | Tinted gradient placeholders; layout unchanged |
@@ -236,6 +254,7 @@ it to a public repo; that history has since been rewritten and the token purged.
 | Goal | Where |
 |---|---|
 | Add an event source | New type conforming to `EventProviding`; register in `EventStore` |
+| Add a live calendar feed | One entry in `CalendarFeed.all` — only the town id, venue name and `.ics` URL |
 | Add a town | One entry in `LocationCatalog`; pull coordinates from its Wikipedia article |
 | Add a category | Add a case to `EventCategory`; `title`/`symbol`/tint are exhaustive switches, so the compiler finds every site |
 | Add events | Append to `events.json` using day offsets |

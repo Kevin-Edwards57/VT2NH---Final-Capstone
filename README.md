@@ -1,7 +1,7 @@
 # VT2NH
 
 An iOS event-discovery app for Vermont and New Hampshire. Browse what's happening
-across 30 towns in both states, filter by category, see it on a map, check the forecast for the
+across 31 towns in both states, filter by category, see it on a map, check the forecast for the
 day of the event, and save what you want to go to.
 
 Built with SwiftUI, SwiftData, MapKit, and EventKit. Every data source is free
@@ -14,7 +14,7 @@ loading model, image-resolution cascade, and the degradation matrix.
 
 ## What it does
 
-- **Browse 105 events across 30 towns** in Vermont and New Hampshire, grouped
+- **Browse ~200 events across 31 towns** in Vermont and New Hampshire, grouped
   into Today / Tomorrow / This Week / Later
 - **Filter** by eight categories or free-only, and search names, venues, and towns
 - **Pick a state, then a town** — each with a photo, Wikipedia summary, and link
@@ -36,7 +36,8 @@ All free. No paid tier, no credit card.
 
 | Source | What it provides | Key required | Limits |
 |---|---|---|---|
-| **Bundled feed** (`Data/events.json`) | 105 sample events across 30 towns | No | None — works offline |
+| **Bundled feed** (`Data/events.json`) | 108 sample events across 31 towns | No | None — works offline |
+| **Public iCalendar feeds** | ~90 *real* events from 7 library and museum calendars | **No** | None — open format, not an API |
 | **[Ticketmaster Discovery](https://developer.ticketmaster.com)** | Real ticketed events near a town | Yes, free | 5,000 req/day |
 | **[Open-Meteo](https://open-meteo.com)** | Forecast for each event's date and coordinates | **No** | 10,000 req/day |
 | **[Wikipedia REST](https://en.wikipedia.org/api/rest_v1/)** / **Wikimedia Commons** | Town photos, summaries, article links | **No** | Fair use, needs a User-Agent |
@@ -83,11 +84,12 @@ xcodebuild test -project FBEventsMockProject.xcodeproj \
   -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
 ```
 
-33 tests across 6 suites, covering the logic most likely to lose data silently:
+43 tests across 8 suites, covering the logic most likely to lose data silently:
 the deduplication identity, town/state matching (the two Manchesters), time
-bucketing, event labelling, and the bundled feed's integrity — every event maps
-to a catalog town, every town has events, no date resolves to the past, and
-deduplication discards nothing.
+bucketing, event labelling, the iCalendar parser's edge cases (folded lines,
+escaped text, three date encodings), and the bundled feed's integrity — every
+event maps to a catalog town, every town has events, no date resolves to the
+past, and deduplication discards nothing.
 
 ---
 
@@ -99,19 +101,21 @@ Full write-up with diagrams: **[ARCHITECTURE.md](ARCHITECTURE.md)**
 FBEventsMockProject/
 ├── Models/
 │   ├── Event.swift             Event, Venue, EventCategory, TimeBucket
-│   ├── AppLocation.swift       USState, AppLocation, LocationCatalog (30 towns)
+│   ├── AppLocation.swift       USState, AppLocation, LocationCatalog (31 towns)
 │   └── SavedEvent.swift        SwiftData @Model
 ├── Data/
 │   ├── EventProviding.swift    The source protocol
 │   ├── BundledEventProvider    events.json — offline, no key
 │   ├── TicketmasterProvider    Live events — optional, free key
+│   ├── CalendarFeedProvider    Real events from public .ics feeds — keyless
+│   ├── ICSParser.swift         iCalendar (RFC 5545) reader
 │   ├── EventStore.swift        @Observable state: merge, filter, group
 │   ├── WeatherService.swift    Open-Meteo, keyless
 │   ├── WikipediaService.swift  Town photos, summaries, Commons credit
 │   ├── VenueImagery.swift      Hand-verified venue photographs
 │   ├── LocationProvider.swift  One-shot CoreLocation for "near me"
 │   ├── Secrets.swift           Reads the gitignored Secrets.plist
-│   └── events.json             105 sample events across 30 towns
+│   └── events.json             108 sample events across 31 towns
 ├── Views/
 │   ├── RootView.swift          TabView shell
 │   ├── DiscoverView.swift      Search, filters, time-bucketed sections
@@ -129,10 +133,11 @@ Event sources sit behind a single protocol:
 ```
 EventProviding
 ├── BundledEventProvider     always available, offline, no key
+├── CalendarFeedProvider     real events from public .ics feeds, keyless
 └── TicketmasterProvider     initializes to nil without a key, so the app degrades cleanly
 ```
 
-`EventStore` merges both, deduplicates, and exposes the filtered and grouped
+`EventStore` merges all three, deduplicates, and exposes the filtered and grouped
 results the views read. Because it uses `@Observable`, SwiftUI tracks only the
 properties each view actually touches — typing in the search field doesn't
 redraw the map.
@@ -154,13 +159,17 @@ redraw the map.
   reduce what's shown without producing an error state or an empty screen.
 - **Forecast honesty.** Open-Meteo forecasts run ~16 days out. Events beyond
   that omit the forecast row rather than showing a guess.
+- **Calendar feeds are read, not scraped.** iCalendar is an open format served
+  over plain HTTP; a published `.ics` exists to be subscribed to. Feeds are
+  fetched concurrently and failures are dropped rather than thrown, so one
+  library being unreachable cannot empty the screen.
 
 ---
 
 ## Sample data
 
 `Data/events.json` is clearly-labeled sample content written for this project:
-105 events across all 30 towns. Venues are real places in those towns and venue
+108 events across all 31 towns. Venues are real places in those towns and venue
 coordinates are approximate, offset from each town's Wikipedia centroid. It
 exists so the app is fully functional the moment it's cloned, with no signup step.
 
@@ -202,9 +211,11 @@ Tracked honestly rather than omitted:
 
 Honest list of what this does not have yet.
 
-- **Event data is a bundled sample feed.** Real venues, but the events are
-  written for this project. Configuring a Ticketmaster key adds live listings
-  for the larger venues; small-town events would need another source.
+- **Most event data is still a bundled sample feed.** Six of 31 towns pull
+  real events from public calendars; the rest use written sample content with
+  real venues. Coverage is limited by what venues actually publish: of ~60
+  library, museum, theatre, college and municipal sites probed, seven have a
+  working `.ics`.
 - **Accessibility not fully audited.** Dynamic Type and VoiceOver need a real
   pass; a few serif display sizes are fixed point values.
 - **iPad layout untested.** The grid adapts, but nothing has been verified there.

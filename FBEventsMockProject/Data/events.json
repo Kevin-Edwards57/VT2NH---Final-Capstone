@@ -2101,6 +2101,66 @@
    "durationMinutes": 120,
    "priceLabel": "$38",
    "url": null
+  },
+  {
+   "id": "shl-001",
+   "name": "Shelburne Farms Sunset Walk",
+   "summary": "Guided walk through the working farm's pastures to the lake overlook, timed for golden hour.",
+   "category": "outdoors",
+   "town": "Shelburne",
+   "state": "Vermont",
+   "venue": {
+    "name": "Shelburne Farms",
+    "address": "1611 Harbor Rd, Shelburne, VT",
+    "latitude": 44.3936,
+    "longitude": -73.2523
+   },
+   "dayOffset": 3,
+   "startHour": 18,
+   "startMinute": 30,
+   "durationMinutes": 120,
+   "priceLabel": "$12",
+   "url": null
+  },
+  {
+   "id": "shl-002",
+   "name": "Lake Champlain Boat Day",
+   "summary": "Climb aboard the steamboat Ticonderoga and tour the lighthouse on the museum green.",
+   "category": "family",
+   "town": "Shelburne",
+   "state": "Vermont",
+   "venue": {
+    "name": "Shelburne Museum Green",
+    "address": "6000 Shelburne Rd, Shelburne, VT",
+    "latitude": 44.3767,
+    "longitude": -73.2262
+   },
+   "dayOffset": 9,
+   "startHour": 11,
+   "startMinute": 0,
+   "durationMinutes": 240,
+   "priceLabel": "$28",
+   "url": null
+  },
+  {
+   "id": "shl-003",
+   "name": "Village Farmers Market",
+   "summary": "Saturday market on the village green with cheese from the farm and bread from the bakery.",
+   "category": "food",
+   "town": "Shelburne",
+   "state": "Vermont",
+   "venue": {
+    "name": "Shelburne Village Green",
+    "address": "Shelburne Rd, Shelburne, VT",
+    "latitude": 44.3814,
+    "longitude": -73.2422
+   },
+   "dayOffset": 6,
+   "startHour": 9,
+   "startMinute": 0,
+   "durationMinutes": 210,
+   "priceLabel": "Free",
+   "url": null
   }
  ]
 }

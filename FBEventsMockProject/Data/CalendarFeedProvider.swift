@@ -6,10 +6,11 @@
 //  no account, no quota — these are published calendars meant to be subscribed
 //  to, so the app just reads them.
 //
-//  Coverage is honest about itself: these feeds were found by probing 24
-//  library and venue sites across the 30 covered towns, and four of them
-//  publish a working .ics. Those four towns get live data; the rest fall back
-//  to the bundled feed. Adding a town here is one line once a feed is found.
+//  Coverage is honest about itself: these feeds were found by probing 60
+//  library, museum, theatre, college and municipal sites, and seven publish a
+//  working .ics across six towns. Those towns get live data; the rest fall
+//  back to the bundled feed. Adding one is a single line here once a feed is
+//  found — most sites simply do not publish one.
 //
 
 import Foundation
@@ -32,6 +33,15 @@ struct CalendarFeed: Sendable {
         CalendarFeed(townID: "woodstock",
                      venueName: "Norman Williams Public Library",
                      url: URL(string: "https://normanwilliams.org/events/?ical=1")!),
+        CalendarFeed(townID: "bennington",
+                     venueName: "Bennington Museum",
+                     url: URL(string: "https://benningtonmuseum.org/events/?ical=1")!),
+        CalendarFeed(townID: "shelburne",
+                     venueName: "Shelburne Museum",
+                     url: URL(string: "https://shelburnemuseum.org/events/?ical=1")!),
+        CalendarFeed(townID: "woodstock",
+                     venueName: "Billings Farm & Museum",
+                     url: URL(string: "https://billingsfarm.org/events/?ical=1")!),
         CalendarFeed(townID: "middlebury",
                      venueName: "Ilsley Public Library",
                      url: URL(string: "https://ilsleypubliclibrary.org/events/?ical=1")!)
@@ -41,7 +51,7 @@ struct CalendarFeed: Sendable {
 // MARK: - Provider
 
 struct CalendarFeedProvider: EventProviding {
-    let attribution = "Live library calendars"
+    let attribution = "Live library and museum calendars"
 
     private let session: URLSession
     private let feeds: [CalendarFeed]
